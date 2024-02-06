@@ -26,7 +26,7 @@ const arrowRight = document.querySelector(".arrow_right");
 const arrowLeft = document.querySelector(".arrow_left");
 const imageContainers = document.querySelectorAll("#banner .banner-img .slide-container");
 const bannerImages = document.querySelectorAll("#banner .banner-img img");
-let index = 0;
+ let index = 0;
 
 // Affichage des dots
 function displayDots() {
@@ -43,30 +43,31 @@ function displayDots() {
 displayDots();
 
 
-// gestion des images du carrousel
 
 function updateSlide() {
-    bannerImages.forEach((img, i) => {
-        img.src = slides[index].image;
-    });
+    // Mise à jour des images du carrousel
+    for (let i = 0; i < bannerImages.length; i++) {
+        bannerImages[i].src = slides[index].image;
+    }
 
-    const allImageTexts = document.querySelectorAll("#banner .banner-img .slide-container .image-text");
-    allImageTexts.forEach((text) => {
-        text.innerHTML = ""; 
-    });
+    // Mise à jour du texte de chaque image avec celui de la diapositive actuelle
+    for (let i = 0; i < imageContainers.length; i++) {
+        const imageText = imageContainers[i].querySelector(".image-text");
+        imageText.innerHTML = slides[index].tagLine;
+    }
 
-    const currentImageText = imageContainers[index].querySelector(".image-text");
-    currentImageText.innerHTML = slides[index].tagLine;
-
+    // Mise en surbrillance de l'indicateur de position correspondant à l'image actuelle
     const dotElements = document.querySelectorAll(".dot");
-    dotElements.forEach((dot, i) => {
+    for (let i = 0; i < dotElements.length; i++) {
         if (i === index) {
-            dot.classList.add("dot_selected");
+            dotElements[i].classList.add("dot_selected");
         } else {
-            dot.classList.remove("dot_selected");
+            dotElements[i].classList.remove("dot_selected");
         }
-    });
+    }
 }
+
+
 
 //  Affichage au clic droit
 
