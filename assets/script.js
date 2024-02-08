@@ -24,9 +24,10 @@ console.log(slides);
 const dots = document.querySelector(".dots");
 const arrowRight = document.querySelector(".arrow_right");
 const arrowLeft = document.querySelector(".arrow_left");
-const imageContainers = document.querySelectorAll("#banner .banner-img .slide-container");
-const bannerImages = document.querySelectorAll("#banner .banner-img img");
- let index = 0;
+const bannerImages = document.querySelectorAll("#banner .banner-img");
+const bannerTexts = document.querySelectorAll("#banner .banner-img p");
+
+let index = 0;
 
 // Affichage des dots
 function displayDots() {
@@ -42,8 +43,6 @@ function displayDots() {
 
 displayDots();
 
-
-
 function updateSlide() {
     // Mise à jour des images du carrousel
     for (let i = 0; i < bannerImages.length; i++) {
@@ -51,9 +50,8 @@ function updateSlide() {
     }
 
     // Mise à jour du texte de chaque image avec celui de la diapositive actuelle
-    for (let i = 0; i < imageContainers.length; i++) {
-        const imageText = imageContainers[i].querySelector(".image-text");
-        imageText.innerHTML = slides[index].tagLine;
+    for (let i = 0; i < bannerTexts.length; i++) {
+        bannerTexts[i].innerHTML = slides[index].tagLine;
     }
 
     // Mise en surbrillance de l'indicateur de position correspondant à l'image actuelle
@@ -67,10 +65,7 @@ function updateSlide() {
     }
 }
 
-
-
 //  Affichage au clic droit
-
 arrowRight.addEventListener("click", () => {
     index = (index + 1) % slides.length; 
     updateSlide();
@@ -78,7 +73,6 @@ arrowRight.addEventListener("click", () => {
 });
 
 // Affichage au clic gauche
-
 arrowLeft.addEventListener("click", () => {
     index = (index - 1 + slides.length) % slides.length;
     updateSlide();
