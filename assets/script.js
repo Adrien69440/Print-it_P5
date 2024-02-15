@@ -21,60 +21,59 @@ const slides = [
 console.log(slides);
 
 // Les variables globales
-const dots = document.querySelector(".dots");
+
+const bannerImages = document.querySelector(".banner-img");
+const bannerText = document.querySelector("#banner p");
 const arrowRight = document.querySelector(".arrow_right");
 const arrowLeft = document.querySelector(".arrow_left");
-const bannerImages = document.querySelectorAll("#banner .banner-img");
-const bannerTexts = document.querySelectorAll("#banner .banner-img p");
-
-let index = 0;
+const dotsContainer = document.querySelector(".dots");
+let currentIndex = 0;
 
 // Affichage des dots
-function displayDots() {
+
+function createDots() {
     for (let i = 0; i < slides.length; i++) {
         const dot = document.createElement("div");
         dot.classList.add("dot");
-        dots.appendChild(dot);
-        if (i == index) {
+        dotsContainer.appendChild(dot);
+        if (i === currentIndex) {
             dot.classList.add("dot_selected");
         }
     }
 }
 
-displayDots();
+// fonction principale
 
 function updateSlide() {
-    // Mise à jour des images du carrousel
-    for (let i = 0; i < bannerImages.length; i++) {
-        bannerImages[i].src = slides[index].image;
-    }
+    bannerImages.src = slides[currentIndex].image;
+    bannerText.innerHTML = slides[currentIndex].tagLine;
 
-    // Mise à jour du texte de chaque image avec celui de la diapositive actuelle
-    for (let i = 0; i < bannerTexts.length; i++) {
-        bannerTexts[i].innerHTML = slides[index].tagLine;
-    }
-
-    // Mise en surbrillance de l'indicateur de position correspondant à l'image actuelle
-    const dotElements = document.querySelectorAll(".dot");
-    for (let i = 0; i < dotElements.length; i++) {
-        if (i === index) {
-            dotElements[i].classList.add("dot_selected");
+    const dots = document.querySelectorAll(".dot");
+    for (let i = 0; i < dots.length; i++) {
+        if (i === currentIndex) {
+            dots[i].classList.add("dot_selected");
         } else {
-            dotElements[i].classList.remove("dot_selected");
+            dots[i].classList.remove("dot_selected");
         }
     }
 }
-
 //  Affichage au clic droit
-arrowRight.addEventListener("click", () => {
-    index = (index + 1) % slides.length; 
-    updateSlide();
-    console.log("droite");
-});
 
-// Affichage au clic gauche
-arrowLeft.addEventListener("click", () => {
-    index = (index - 1 + slides.length) % slides.length;
+arrowRight.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % slides.length;
     updateSlide();
-    console.log("gauche");
 });
+console.log(arrowRight);
+
+//  Affichage au clic gauche
+
+arrowLeft.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    updateSlide();
+});
+console.log(arrowLeft);
+
+// Mise en route des fonctions
+
+createDots();
+updateSlide();
